@@ -8,15 +8,22 @@ body {
     background-image: linear-gradient(to top, #000000, #371420, #6b1a38, #a41852, #e0046c);
 }
 
+.navbar {
+    border-bottom: 2px solid #e0046c;
+}
+
 .navbar-brand img {
     width: 150px;
 }
 
-.nav-link, .fa-solid {
+.nav-link,
+.fa-solid {
     color: #e0046c;
 }
 
-.nav-link:hover, .nav-link a:active, .fa-solid:hover {
+.nav-link:hover,
+.nav-link a:active,
+.fa-solid:hover {
     color: #f9f9f9;
 }
 
@@ -24,7 +31,8 @@ body {
     border-color: #f9f9f9;
 }
 
-#home-button:hover, #home-button:focus {
+#home-button:hover,
+#home-button:focus {
     background-color: #e0046c;
     color: #f9f9f9;
     transform: scale(1.1);
@@ -41,11 +49,11 @@ h1 {
 }
 
 .banner {
-    border-top: 2px solid #e0046c;
     height: auto;
 }
 
-h1:hover, h4:hover {
+h1:hover,
+h4:hover {
     transform: scale(1.2);
 
 }
@@ -71,7 +79,8 @@ footer img:hover {
     font-weight: bold;
 }
 
-#main-checkbox input, #main-search btn-outline-light {
+#main-checkbox input,
+#main-search btn-outline-light {
     border-color: #e0046c
 }
 
@@ -128,10 +137,3 @@ table {
 .subt {
     background-color: gray;
 }
-
-
-
-
-
-
-
