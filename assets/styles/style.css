@@ -61,7 +61,7 @@ footer {
 }
 
 .form-control {
-    width: 20rem;
+    max-width: 20rem;
     border-color: #e0046c;
     font-weight: bolder;
 }
@@ -93,7 +93,7 @@ footer {
     color: #e0046c;
 }
 
-#form-button {
+#form-button, form {
     border-color: #e0046c;
     color: #e0046c;
 }
@@ -102,10 +102,6 @@ footer {
     border-color: #f9f9f9;
     color: #f9f9f9;
     background-color: #e0046c;
-}
-
-form {
-    color: #e0046c;
 }
 
 td {
@@ -127,3 +123,9 @@ table {
 .subt {
     background-color: gray;
 }
+
+@media only screen and (max-width: 768px) {
+    #main-form {
+      justify-content: center;
+    }
+  }
