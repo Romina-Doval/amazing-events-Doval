@@ -5,7 +5,7 @@
 }
 
 body {
-    background-image: linear-gradient(to top, #000000, #371420, #6b1a38, #a41852, #e0046c);
+    background: radial-gradient(circle, rgba(224,4,108,0.9179359243697479) 2%, rgba(0,0,0,1) 90%);
 }
 
 .navbar {
@@ -22,7 +22,6 @@ body {
 }
 
 .nav-link:hover,
-.nav-link a:active,
 .fa-solid:hover {
     color: #f9f9f9;
 }
@@ -42,7 +41,6 @@ body {
     color: #f9f9f9;
 }
 
-
 h1 {
     color: #e0046c;
     text-shadow: 2px 2px 2px rgba(249, 249, 249, 1);
@@ -50,22 +48,16 @@ h1 {
 
 .banner {
     height: auto;
+    background-image: url(../images/Mass\ Circles.svg);
 }
 
-h1:hover,
-h4:hover {
+h1:hover, footer img:hover, .fa-solid:hover {
     transform: scale(1.2);
-
 }
 
 footer {
     color: #f9f9f9;
     border-top: 2px solid #e0046c;
-}
-
-footer img:hover {
-    box-shadow: 0px 0px 37px 0px #e0046c;
-    transform: scale(1.1);
 }
 
 .form-control {
@@ -84,8 +76,8 @@ footer img:hover {
     border-color: #e0046c
 }
 
-.card {
-    box-shadow: 0px 0px 15px 3px #f9f9f9;
+.card, form, table {
+    box-shadow: 0px 0px 15px 1px #000000;
 }
 
 .card-title {
@@ -114,7 +106,6 @@ footer img:hover {
 
 form {
     color: #e0046c;
-    box-shadow: 0px 0px 15px 3px #f9f9f9;
 }
 
 td {
@@ -131,7 +122,6 @@ th {
 
 table {
     width: 80rem;
-    box-shadow: 0px 0px 50px -7px #f9f9f9;
 }
 
 .subt {
