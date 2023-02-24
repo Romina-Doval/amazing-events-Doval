@@ -129,3 +129,10 @@ table {
       justify-content: center;
     }
   }
+
+  .card-details p{
+    color: #e0046c;
+    font-weight: bold;
+  }
+
+
