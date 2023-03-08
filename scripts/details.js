@@ -6,7 +6,6 @@ let params = new URLSearchParams(queryString);
 
 let idURL = params.get("id")
 
-
 const eventDetails = arrayEvents.find(event => event._id == idURL)
 
 const containerCardsDetails = document.getElementById('containerDetails')

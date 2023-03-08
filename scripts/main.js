@@ -1,7 +1,9 @@
 /* -------------------------------- VARIABLES ------------------------------- */
 const eventos = data.events;
-const containerHome = document.getElementById('cardsHome')
+const containerMain = document.getElementById('containerMain')
+const containerCheckbox = document.getElementById('containerCheckbox')
 const search = document.getElementById('filterSearch')
+
 const setCategorias = new Set()
 for (let event of data.events) {
   setCategorias.add(event.category)
@@ -10,7 +12,8 @@ let selected = []
 
 /* ---------------------------------- CARDS --------------------------------- */
 function showCards(eventos) {
-  let cards = ' '
+  let cards = '';
+  
   for (const evento of eventos) {
     cards += `<div class="card bg-dark bg-gradient text-white mb-5" style="width: 18rem;">
           <img src="${evento.image}" class="card-img-top p-1" style="height: 10rem;" alt="${evento.name}"/>
@@ -22,11 +25,10 @@ function showCards(eventos) {
           </div>
       </div>`
   }
-  return containerHome.innerHTML = cards
+  return containerMain.innerHTML = cards
 }
 
 /* ---------------------------- CREATE CHECKBOXES --------------------------- */
-
 function createCategory(setCategorias) {
   let categories = '';
 
@@ -39,13 +41,13 @@ function createCategory(setCategorias) {
 
 
 // Se puede sacar si incorporas este filtro directo en showcards
-function EventsFilterByCategory() {
+function filterByCategory() {
 
   if (selected.length == 0) {
-    containerHome.innerHTML = showCards(eventos)
+    containerMain.innerHTML = showCards(eventos)
   } else {
     let parcial = eventos.filter(evento => selected.includes(evento.category))
-    containerHome.innerHTML = showCards(parcial)
+    containerMain.innerHTML = showCards(parcial)
   }
 }
 
@@ -57,24 +59,25 @@ function checkboxCategory() {
 
       if (e.target.checked) {
         selected.push(e.target.value)
-        EventsFilterByCategory()
+        filterByCategory()
       } else {
         selected = selected.filter(notcheck => notcheck !== e.target.value)
-        EventsFilterByCategory()
+        filterByCategory()
       }
     })
   }
 }
+
 
 /* --------------------------------- SEARCH --------------------------------- */
 function searchBar(events) {
   search.addEventListener("change", () => {
 
     let filtered = eventos.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()))
-    EventsFilterByCategory(eventos)
+    filterByCategory(eventos)
 
     if (filtered.length == 0) {
-      containerHome.innerHTML = `
+      containerMain.innerHTML = `
     <div class="text-center fw-bold divError mt-4 mb-2 w-50 pt-4 p-5">
     <div>
         <img src="assets/images/Error2.gif" alt="Result Not Found" class="error w-50 mb-3">
@@ -90,7 +93,7 @@ function searchBar(events) {
   })
 }
 
-/* -------------------------------------------------------------------------- */
+/* -------------------------------- RENDERED -------------------------------- */
 showCards(eventos)
 createCategory(setCategorias)
 checkboxCategory()
