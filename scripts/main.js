@@ -1,35 +1,31 @@
 /* -------------------------------- VARIABLES ------------------------------- */
-const containerCheckbox = document.getElementById('containerCheckbox');
-const events = data.events;
-const search = document.getElementById('filterSearch');
-const notFound = document.getElementById('notFound');
+const eventos = data.events;
+const containerHome = document.getElementById('cardsHome')
+const search = document.getElementById('filterSearch')
+const setCategorias = new Set()
+for (let event of data.events) {
+  setCategorias.add(event.category)
+}
 let selected = []
 
 /* ---------------------------------- CARDS --------------------------------- */
-function createCard(events) {
-  let containerHome = document.getElementById('cardsHome')
+function showCards(eventos) {
   let cards = ' '
-
-  for (const event of events) {
+  for (const evento of eventos) {
     cards += `<div class="card bg-dark bg-gradient text-white mb-5" style="width: 18rem;">
-          <img src="${event.image}" class="card-img-top p-1" style="height: 10rem;" alt="${event.name}"/>
+          <img src="${evento.image}" class="card-img-top p-1" style="height: 10rem;" alt="${evento.name}"/>
           <div class="card-body text-center">
-              <h5 class="card-title fw-bold">${event.name}</h5>
-              <p class="card-text mb-4">${event.description}</p>
-              <span class="me-5">Price $ ${event.price}</span>
-              <a href="./pages/details.html?id=${event._id}" class="btn btn-outline-light card-button">+ Info</a>
+              <h5 class="card-title fw-bold">${evento.name}</h5>
+              <p class="card-text mb-4">${evento.description}</p>
+              <span class="me-5">Price $ ${evento.price}</span>
+              <a href="./pages/details.html?id=${evento._id}" class="btn btn-outline-light card-button">+ Info</a>
           </div>
       </div>`
   }
   return containerHome.innerHTML = cards
 }
 
-
 /* ---------------------------- CREATE CHECKBOXES --------------------------- */
-const setCategorias = new Set()
-for (let event of data.events) {
-  setCategorias.add(event.category)
-}
 
 function createCategory(setCategorias) {
   let categories = '';
@@ -41,43 +37,44 @@ function createCategory(setCategorias) {
   } return containerCheckbox.innerHTML = categories
 };
 
-/* ----------------------------- FILTER CHECKBOX ---------------------------- */
-function eventsFilteredByCat(events) {
+
+// Se puede sacar si incorporas este filtro directo en showcards
+function EventsFilterByCategory() {
 
   if (selected.length == 0) {
-      containerHome.innerHTML = createCard(events)
+    containerHome.innerHTML = showCards(eventos)
   } else {
-      let check= events.filter(event => selected.includes(event.category))
-      containerHome.innerHTML = createCard(check)
-  } 
+    let parcial = eventos.filter(evento => selected.includes(evento.category))
+    containerHome.innerHTML = showCards(parcial)
+  }
 }
 
-function checkboxesCat() {
+/* ----------------------------- FILTER CHECKBOX ---------------------------- */
+function checkboxCategory() {
   let checkboxes = document.querySelectorAll("input[type=checkbox]")
-
   for (let checkbox of checkboxes) {
-      checkbox.addEventListener("click", (e) => {
+    checkbox.addEventListener("click", (e) => {
 
-          if (e.target.checked) {
-              selected.push(e.target.value)
-              eventsFilteredByCat(events)
-          } else {
-              selected = selected.filter(notcheck => notcheck !== e.target.value)
-              eventsFilteredByCat(events)
-          }
-      })
+      if (e.target.checked) {
+        selected.push(e.target.value)
+        EventsFilterByCategory()
+      } else {
+        selected = selected.filter(notcheck => notcheck !== e.target.value)
+        EventsFilterByCategory()
+      }
+    })
   }
 }
 
 /* --------------------------------- SEARCH --------------------------------- */
+function searchBar(events) {
+  search.addEventListener("change", () => {
 
-search.addEventListener("change", () => {
-  
-  let filtered = events.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()))
-  createCard(filtered)
+    let filtered = eventos.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()))
+    EventsFilterByCategory(eventos)
 
-  if (filtered.length == 0) {
-    return notFound.innerHTML = `
+    if (filtered.length == 0) {
+      containerHome.innerHTML = `
     <div class="text-center fw-bold divError mt-4 mb-2 w-50 pt-4 p-5">
     <div>
         <img src="assets/images/Error2.gif" alt="Result Not Found" class="error w-50 mb-3">
@@ -87,10 +84,14 @@ search.addEventListener("change", () => {
         <a href="./index.html" class="btn btn-outline-light mt-3 p-2 buttonError">Search again!</a>
     </div>
     </div>`
-  }
-})
+    } else {
+      showCards(filtered)
+    }
+  })
+}
 
 /* -------------------------------------------------------------------------- */
-createCard(data.events)
+showCards(eventos)
 createCategory(setCategorias)
-
+checkboxCategory()
+searchBar(eventos)
