@@ -29,3 +29,24 @@ containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1" style="m
     </div>
 </div>
 </div>`
+
+
+
+/* ---------------------- FILTER assistance || capacity --------------------- */
+// let result_est_ass=[]
+//  result_est_ass=calculate()
+
+
+// function calculate(){
+// let result=[]
+// // result=one_event.assistance || one_event.estimate
+//   result[0]=one_event.assistance
+//   result[1] ="assistance"
+//   if(result[0]==undefined){
+//     result[0]=one_event.estimate
+//     result[1]="estimate"
+//   }
+//   return result
+// }
+
+{/* <p class="pt-4 col-6">${result_est_ass[1]} ${result_est_ass[0]} </p> */}
