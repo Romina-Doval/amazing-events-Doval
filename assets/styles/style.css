@@ -71,7 +71,7 @@ footer {
     font-weight: bold;
 }
 
-#main-checkbox input,
+#containerCheckbox input,
 #main-search btn-outline-light {
     border-color: #e0046c
 }
@@ -129,3 +129,31 @@ table {
       justify-content: center;
     }
   }
+
+
+.text-details {
+    color: #e0046c;
+    margin-left: 20px;
+}
+
+.text-white {
+    margin-left: 15px;
+}
+
+.buttonError {
+    border-color: #e0046c;
+    color: #e0046c;
+    font-size: 20px;
+}
+
+.divError {
+    background-color: #000000;
+    border-radius: 50px;
+}
+
+#filterSearch::placeholder {
+    color: gray;
+    font-weight: lighter;
+    font-style: italic;
+}
+
