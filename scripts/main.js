@@ -12,7 +12,7 @@ function showCards(listaEventos) {
 
   if (listaEventos[0].name == "error" || listaEventos.length == 0) {
     containerMain.innerHTML = `
-  <div class="text-center fw-bold divError mt-4 mb-2 w-50 pt-4 p-5">
+  <div class="text-center fw-bold divError mb-2 w-50 p-5">
   <div>
       <img src="assets/images/Error2.gif" alt="Result Not Found" class="error w-50 mb-3">
   </div>
