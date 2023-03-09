@@ -7,7 +7,7 @@ const containerCardsDetails = document.getElementById('containerDetails')
 
 containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1" style="max-width: 50%;" id="card-hover">
 <div class="row g-0">
-    <div class="col-sm-12 col-md-6 p-2 d-flex">
+    <div class="col-sm-12 col-md-6 p-4 d-flex">
         <img src="${eventDetails.image}" class="card-img img-fluid" alt="${eventDetails.name}">
     </div>
     <div class="col-sm-12 col-md-6 d-flex align-items-center">
@@ -22,6 +22,7 @@ containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1" style="m
                 <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Assistance:<span class="text-white">${eventDetails.assistance}</span></p>
                 <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Estimate:<span class="text-white">${eventDetails.estimate}</span></p>
             </div>
+            <a href="../index.html" class="btn btn-outline-light mt-3 buttonError">Back</a>
         </div>
     </div>
 </div>
