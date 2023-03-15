@@ -1,10 +1,28 @@
 /* -------------------------------- VARIABLES ------------------------------- */
-const eventos = data.events;
+const API_URL= "https://mindhub-xj03.onrender.com/api/amazing";
 const containerMain = document.getElementById('containerMain')
 const containerCheckbox = document.getElementById('containerCheckbox')
 const search = document.getElementById('filterSearch')
-let selected = []
-let filtered = []
+let selected = [];
+let filtered = [];
+let eventos;
+
+/* ----------------------------- FETCH Y RENDER ----------------------------- */
+fetch(API_URL)
+  .then(response => response.json())
+  .then(data => {
+    eventos = data.events;
+    showCards(eventos);
+    createCategory(eventos);
+    checkboxCategory();
+    searchBar();
+    filterAll()
+  })
+  .catch(error => {
+    console.log("error");
+  })
+
+
 
 /* ---------------------------------- DRAW --------------------------------- */
 function showCards(listaEventos) {
@@ -37,7 +55,7 @@ function showCards(listaEventos) {
   }
 }
 
-function createCategory() {
+function createCategory(eventos) {
   const setCategorias = new Set()
   for (let event of eventos) {
     setCategorias.add(event.category)
@@ -115,9 +133,3 @@ function filterAll() {
   }
 }
 
-
-/* -------------------------------- RENDER ---------------------------------- */
-showCards(eventos)
-createCategory()
-checkboxCategory()
-searchBar()

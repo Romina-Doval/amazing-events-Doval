@@ -1,19 +1,36 @@
-const arrayEvents = data.events;
+const API_URL= "https://mindhub-xj03.onrender.com/api/amazing";
+const containerCardsDetails = document.getElementById('containerDetails')
+
 const queryString = location.search;
 let params = new URLSearchParams(queryString);
 let idURL = params.get("id")
-const eventDetails = arrayEvents.find(event => event._id == idURL)
-const containerCardsDetails = document.getElementById('containerDetails')
 
-containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1" style="max-width: 50%;" id="card-hover">
+
+fetch(API_URL)
+  .then(response => response.json())
+  .then(data => {
+    const eventos = data.events;
+    const eventDetails = eventos.find(event => event._id == idURL);
+    drawDetails(eventDetails);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+
+function drawDetails (eventDetails){
+containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1" style="max-width: 50%;" id="card-details">
 <div class="row g-0">
+    <div class="text-center pt-2">
+        <h3 class="card-title title-details mb-3">${eventDetails.name}</h3>
+        <p class="card-text text-white">"${eventDetails.description}"</p>
+    </div>
     <div class="col-sm-12 col-md-6 p-4 d-flex">
-        <img src="${eventDetails.image}" class="card-img img-fluid" alt="${eventDetails.name}">
+        <img src="${eventDetails.image}" class="card-img img-fluid"  alt="${eventDetails.name}">
     </div>
     <div class="col-sm-12 col-md-6 d-flex align-items-center">
         <div class="card-body text-center">
-            <h3 class="card-title title-details mb-3">${eventDetails.name}</h3>
-            <p class="card-text text-white">"${eventDetails.description}"</p>
+            
             <div class="card-details mt-4 text-start">
                 <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Date:<span class="text-white">${eventDetails.date}</span></p>
                 <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Place:<span class="text-white">${eventDetails.place}</span></p>
@@ -27,7 +44,6 @@ containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1" style="m
     </div>
 </div>
 </div>`
-
-
+} 
 
 

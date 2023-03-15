@@ -1,10 +1,28 @@
 /* -------------------------------- VARIABLES ------------------------------- */
-const eventos = data.events;
+const API_URL= "https://mindhub-xj03.onrender.com/api/amazing";
 const containerMain = document.getElementById('containerMain')
 const containerCheckbox = document.getElementById('containerCheckbox')
 const search = document.getElementById('filterSearch')
 let selected = []
 let filtered = []
+let eventos;
+let date;
+
+fetch(API_URL)
+  .then(response => response.json())
+  .then(data => {
+    eventos = data.events;
+    date = data.currentDate
+    showCards(eventos);
+    createCategory(eventos);
+    checkboxCategory();
+    searchBar();
+    filterAll()
+  })
+  .catch(error => {
+    console.log("error");
+  })
+
 
 /* ---------------------------------- DRAW --------------------------------- */
 function showCards(listaEventos) {
@@ -18,12 +36,12 @@ function showCards(listaEventos) {
   </div>
   <div>
       <p class="text-white fs-3">Sorry, but are not results for your search.</p>
-      <a href="../pages/past-events.html" class="btn btn-outline-light mt-3 p-2 buttonError">Search again!</a>
+      <a href="../pages/upcoming-events.html" class="btn btn-outline-light mt-3 p-2 buttonError">Search again!</a>
   </div>
   </div>`
   } else {
   for (const evento of listaEventos) {
-    if (evento.date < data.currentDate) {
+    if (evento.date < date) {
       cards += `<div class="card bg-dark bg-gradient text-white mb-5" style="width: 18rem;">
       <img src="${evento.image}" class="card-img-top p-1" style="height: 10rem;" alt="${evento.name}"/>
       <div class="card-body text-center">
@@ -118,8 +136,3 @@ function filterAll() {
 }
 
 
-/* -------------------------------- RENDER ---------------------------------- */
-showCards(eventos)
-createCategory()
-checkboxCategory()
-searchBar()
