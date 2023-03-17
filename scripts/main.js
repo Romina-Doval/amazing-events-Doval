@@ -1,19 +1,20 @@
 /* -------------------------------- VARIABLES ------------------------------- */
-const API_URL= "https://mindhub-xj03.onrender.com/api/amazing";
+const API_URL = "https://mindhub-xj03.onrender.com/api/amazing";
 const containerMain = document.getElementById('containerMain')
 const containerCheckbox = document.getElementById('containerCheckbox')
 const search = document.getElementById('filterSearch')
 let selected = [];
 let filtered = [];
-let eventos;
+let events;
+
 
 /* ----------------------------- FETCH Y RENDER ----------------------------- */
 fetch(API_URL)
   .then(response => response.json())
   .then(data => {
-    eventos = data.events;
-    showCards(eventos);
-    createCategory(eventos);
+    events = data.events;
+    showCards(events);
+    createCategory(events);
     checkboxCategory();
     searchBar();
     filterAll()
@@ -23,12 +24,11 @@ fetch(API_URL)
   })
 
 
-
 /* ---------------------------------- DRAW --------------------------------- */
-function showCards(listaEventos) {
+function showCards(listEvents) {
   let cards = '';
 
-  if (listaEventos[0].name == "error" || listaEventos.length == 0) {
+  if (listEvents[0].name == "error" || listEvents.length == 0) {
     containerMain.innerHTML = `
   <div class="text-center fw-bold divError mb-2 w-50 p-5">
   <div>
@@ -40,14 +40,14 @@ function showCards(listaEventos) {
   </div>
   </div>`
   } else {
-    for (const evento of listaEventos) {
+    for (const event of listEvents) {
       cards += `<div class="card bg-dark bg-gradient text-white mb-5" style="width: 18rem;">
-          <img src="${evento.image}" class="card-img-top p-1" style="height: 10rem;" alt="${evento.name}"/>
+          <img src="${event.image}" class="card-img-top p-1" style="height: 10rem;" alt="${event.name}"/>
           <div class="card-body text-center">
-              <h5 class="card-title fw-bold">${evento.name}</h5>
-              <p class="card-text mb-4">${evento.description}</p>
-              <span class="me-5">Price $ ${evento.price}</span>
-              <a href="./pages/details.html?id=${evento._id}" class="btn btn-outline-light card-button">+ Info</a>
+              <h5 class="card-title fw-bold">${event.name}</h5>
+              <p class="card-text mb-4">${event.description}</p>
+              <span class="me-5">Price $ ${event.price}</span>
+              <a href="./pages/details.html?id=${event._id}" class="btn btn-outline-light card-button">+ Info</a>
           </div>
       </div>`
     }
@@ -55,19 +55,23 @@ function showCards(listaEventos) {
   }
 }
 
-function createCategory(eventos) {
-  const setCategorias = new Set()
-  for (let event of eventos) {
-    setCategorias.add(event.category)
+
+function createCategory(events) {
+  const setCategories = new Set();
+  for (let event of events) {
+    setCategories.add(event.category);
   }
+  const sortedCategories = Array.from(setCategories).sort();
   let categories = '';
 
-  for (const category of setCategorias) {
+  for (const category of sortedCategories) {
     categories += `
-      <input class="form-check-input" type="checkbox" name="category" value="${category}" id="checkbox"></input>
-      <label class="form-check-label text-white me-4" for="checkbox">${category}</label>`
-  } return containerCheckbox.innerHTML = categories
+      <input class="form-check-input me-2" type="checkbox" name="category" value="${category}" id="checkbox"></input>
+      <label class="form-check-label text-white me-4" for="checkbox">${category}</label>`;
+  }
+  return containerCheckbox.innerHTML = categories;
 }
+
 
 /* ----------------------------  CHECKBOX --------------------------------- */
 function checkboxCategory() {
@@ -86,11 +90,12 @@ function checkboxCategory() {
   }
 }
 
+
 /* --------------------------------- SEARCH --------------------------------- */
 function searchBar() {
   search.addEventListener("change", () => {
     const error = { name: 'error' }
-    filtered = eventos.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()))
+    filtered = events.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()))
     if (filtered.length == 0) {
       filtered.push(error)
     }
@@ -98,14 +103,15 @@ function searchBar() {
   })
 }
 
+
 /* ------------------------------ CROSS FILTER ------------------------------ */
 function filterAll() {
 
   let selectedEvents = []
   for (const i of selected)
-    for (const evento of eventos)
-      if (i == evento.category)
-        selectedEvents.push(evento)
+    for (const event of events)
+      if (i == event.category)
+        selectedEvents.push(event)
 
   //caso 0: falló la busqueda
   if (filtered.length == 1 && filtered[0].name == "error")
@@ -132,4 +138,3 @@ function filterAll() {
     showCards(filteredArray)
   }
 }
-

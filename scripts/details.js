@@ -1,4 +1,4 @@
-const API_URL= "https://mindhub-xj03.onrender.com/api/amazing";
+const API_URL = "https://mindhub-xj03.onrender.com/api/amazing";
 const containerCardsDetails = document.getElementById('containerDetails')
 
 const queryString = location.search;
@@ -9,8 +9,8 @@ let idURL = params.get("id")
 fetch(API_URL)
   .then(response => response.json())
   .then(data => {
-    const eventos = data.events;
-    const eventDetails = eventos.find(event => event._id == idURL);
+    const events = data.events;
+    const eventDetails = events.find(event => event._id == idURL);
     drawDetails(eventDetails);
   })
   .catch(error => {
@@ -18,12 +18,13 @@ fetch(API_URL)
   });
 
 
-function drawDetails (eventDetails){
-containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1" style="max-width: 50%;" id="card-details">
+/* ---------------------------------- DRAW --------------------------------- */
+function drawDetails(eventDetails) {
+  containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1 scale-in-center" style="max-width: 50%;" id="card-details">
 <div class="row g-0">
-    <div class="text-center pt-2">
-        <h3 class="card-title title-details mb-3">${eventDetails.name}</h3>
-        <p class="card-text text-white">"${eventDetails.description}"</p>
+    <div class="text-center pt-4">
+        <h3 class="card-title title-details mb-3 fs-2 text-uppercase fw-bold">${eventDetails.name}</h3>
+        <p class="card-text description-details fs-5">"${eventDetails.description}"</p>
     </div>
     <div class="col-sm-12 col-md-6 p-4 d-flex">
         <img src="${eventDetails.image}" class="card-img img-fluid"  alt="${eventDetails.name}">
@@ -31,19 +32,18 @@ containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1" style="m
     <div class="col-sm-12 col-md-6 d-flex align-items-center">
         <div class="card-body text-center">
             
-            <div class="card-details mt-4 text-start">
-                <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Date:<span class="text-white">${eventDetails.date}</span></p>
-                <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Place:<span class="text-white">${eventDetails.place}</span></p>
-                <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Price:<span class="text-white">$ ${eventDetails.price}</span></p>
-                <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Capacity:<span class="text-white">${eventDetails.capacity}</span></p>
-                <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Assistance:<span class="text-white">${eventDetails.assistance}</span></p>
-                <p class="mb-1 text-details"><i class="fa-regular fa-star"></i>Estimate:<span class="text-white">${eventDetails.estimate}</span></p>
+            <div class="card-details mt-1 text-start">
+                <p class="mb-1 text-details fw-bold"><i class="fa-regular fa-star"></i>Date:<span class="text-details2">${eventDetails.date}</span></p>
+                <p class="mb-1 text-details fw-bold"><i class="fa-regular fa-star"></i>Place:<span class="text-details2">${eventDetails.place}</span></p>
+                <p class="mb-1 text-details fw-bold"><i class="fa-regular fa-star"></i>Price:<span class="text-details2">$ ${eventDetails.price}</span></p>
+                <p class="mb-1 text-details fw-bold"><i class="fa-regular fa-star"></i>Capacity:<span class="text-details2">${eventDetails.capacity}</span></p>
+                <p class="mb-1 text-details fw-bold"><i class="fa-regular fa-star"></i>Assistance:<span class="text-details2">${eventDetails.assistance}</span></p>
+                <p class="mb-1 text-details fw-bold"><i class="fa-regular fa-star"></i>Estimate:<span class="text-details2">${eventDetails.estimate}</span></p>
+                
             </div>
-            <a href="../index.html" class="btn btn-outline-light mt-3 buttonError">Back</a>
+            <a href="../index.html" class="btn btn-outline-light mt-3 buttonClear">Back</a>
         </div>
     </div>
 </div>
 </div>`
-} 
-
-
+}

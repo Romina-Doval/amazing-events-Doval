@@ -45,6 +45,7 @@ body {
 h1 {
     color: #e0046c;
     text-shadow: 2px 2px 2px rgba(249, 249, 249, 1);
+    letter-spacing: 1px; 
 }
 
 .banner {
@@ -136,7 +137,9 @@ table {
     margin-left: 20px;
 }
 
-.text-white {
+
+.description-details, .text-details2 {
+    color: #D7DBDD;
     margin-left: 15px;
 }
 
@@ -159,16 +162,43 @@ table {
 }
 
 .fa-star {
-    color: #f9f9f9;
+    color: #FBFCFC;
     margin-right: 10px;
 }
 
-#card-details:hover {
-    transform: none;
-    box-shadow: 0px 0px 25px 7px #f9f9f9;
-}
-
 #card-details {
-    border-radius: 50px 15px
+    border-radius: 15px;
 }
 
+.row-cat {
+    background: #D7DBDD ;
+}
+
+.scale-in-center{
+    animation:scale-in-center .8s cubic-bezier(.25,.46,.45,.94) both
+}
+
+
+@keyframes scale-in-center{
+    0%{transform:scale(0);
+    opacity:1}100%{transform:scale(1);
+        opacity:1}
+}
+
+.buttonClear {
+    border-color: #e0046c;
+    color: #e0046c;
+    font-size: 15px;
+}
+
+.buttonClear:hover {
+    border-color: #e0046c;
+    color: #e0046c;
+    font-weight: bold;
+}
+
+.title-details {
+    -webkit-text-stroke: 2px #e0046c;
+    color: transparent;
+    letter-spacing: 1px; 
+}
