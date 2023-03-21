@@ -119,7 +119,7 @@ function filterSearch() {
 function filterAll() {
   const selectedEvents = events.filter(event => selected.includes(event.category));
  
-  if (filtered.length === 1 && filtered[0].name === "error") {
+  if (filtered.length === 1) {
     drawCards(filtered);
 
   } else if (selectedEvents.length === 0 && filtered.length === 0) {

@@ -103,7 +103,7 @@ function filterSearch() {
   search.addEventListener("change", () => {
     filtered = events.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()))
 
-    if (filtered.length == 0) {
+    if (filtered.length === 0) {
       drawNotFound();
     } else {
       filterAll();
@@ -116,10 +116,10 @@ function filterSearch() {
 function filterAll() {
   const selectedEvents = events.filter(event => selected.includes(event.category));
  
-  if (filtered.length === 1 && filtered[0].name === "error") {
+  if (filtered.length === 1) {
     drawCards(filtered);
 
-  //if (!selectedEvents.length && !filtered.length)
+  //else if (!selectedEvents.length && !filtered.length)
   } else if (selectedEvents.length === 0 && filtered.length === 0) {
     drawCards(events);
 
