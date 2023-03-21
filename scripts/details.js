@@ -20,7 +20,7 @@ fetch(API_URL)
 
 /* ---------------------------------- DRAW --------------------------------- */
 function drawDetails(eventDetails) {
-  containerCardsDetails.innerHTML = `<div class="card d-flex bg-dark p-1 scale-in-center" style="max-width: 50%;" id="card-details">
+  containerCardsDetails.innerHTML = `<div class="cardDetails card d-flex bg-dark p-1 scale-in-center" style="max-width: 50%;" id="card-details">
 <div class="row g-0">
     <div class="text-center pt-4">
         <h3 class="card-title title-details mb-3 fs-2 text-uppercase fw-bold">${eventDetails.name}</h3>

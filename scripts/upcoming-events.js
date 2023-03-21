@@ -1,10 +1,10 @@
 /* -------------------------------- VARIABLES ------------------------------- */
 const API_URL = "https://mindhub-xj03.onrender.com/api/amazing";
-const containerMain = document.getElementById('containerMain')
-const containerCheckbox = document.getElementById('containerCheckbox')
-const search = document.getElementById('filterSearch')
-let selected = []
-let filtered = []
+const containerMain = document.getElementById('containerMain');
+const containerCheckbox = document.getElementById('containerCheckbox');
+const search = document.getElementById('filterSearch');
+let selected = [];
+let filtered = [];
 let events;
 let date;
 
@@ -14,12 +14,12 @@ fetch(API_URL)
   .then(response => response.json())
   .then(data => {
     events = data.events;
-    date = data.currentDate
-    showCards(events);
-    createCategory(events);
-    checkboxCategory();
-    searchBar();
-    filterAll()
+    date = data.currentDate;
+    drawCards(events);
+    drawCategories(events);
+    filterByCategory();
+    filterSearch();
+    filterAll();
   })
   .catch(error => {
     console.log("error");
@@ -27,20 +27,11 @@ fetch(API_URL)
 
 
 /* ---------------------------------- DRAW --------------------------------- */
-function showCards(listEvents) {
+function drawCards(listEvents) {
   let cards = '';
 
-  if (listEvents[0].name == "error" || listEvents.length == 0) {
-    containerMain.innerHTML = `
-  <div class="text-center fw-bold divError mt-4 mb-2 w-50 pt-4 p-5">
-  <div>
-      <img src="../assets/images/Error2.gif" alt="Result Not Found" class="error w-50 mb-3">
-  </div>
-  <div>
-      <p class="text-white fs-3">Sorry, but are not results for your search.</p>
-      <a href="../pages/upcoming-events.html" class="btn btn-outline-light mt-3 p-2 buttonError">Search again!</a>
-  </div>
-  </div>`
+  if (listEvents.length == 0) {
+    drawNotFound();
   } else {
     for (const event of listEvents) {
       if (event.date > date) {
@@ -59,84 +50,89 @@ function showCards(listEvents) {
 }
 
 
-function createCategory(events) {
-  const setCategories = new Set();
-  for (let event of events) {
-    setCategories.add(event.category);
-  }
-  const sortedCategories = Array.from(setCategories).sort();
-  let categories = '';
-
-  for (const category of sortedCategories) {
-    categories += `
+function drawCategories(events) {
+  const categories = events.reduce((accumulator, event) => {
+    if (event.date > date && !accumulator.includes(event.category)) {
+      accumulator.push(event.category);
+    }
+    return accumulator;
+  }, []).sort();
+  
+  const checkboxes = categories.map(category => {
+    return `
       <input class="form-check-input me-2" type="checkbox" name="category" value="${category}" id="checkbox"></input>
-      <label class="form-check-label text-white me-4" for="checkbox">${category}</label>`;
-  }
-  return containerCheckbox.innerHTML = categories;
+      <label class="form-check-label text-white me-4" for="checkbox">${category}</label>
+    `;
+  }).join('');
+  
+  containerCheckbox.innerHTML = checkboxes;
 }
 
 
-/* ----------------------------  CHECKBOX --------------------------------- */
-function checkboxCategory() {
-  let checkboxes = document.querySelectorAll("input[type=checkbox]")
-  for (let checkbox of checkboxes) {
+function drawNotFound() {
+  containerMain.innerHTML = `
+    <div class="text-center fw-bold divError mb-2 w-50 p-5">
+      <div>
+        <img src="../assets/images/notFound.gif" alt="Result Not Found" class="error w-50 mb-3">
+      </div>
+      <div>
+        <p class="text-white fs-3">Sorry, but are not results for your search.</p>
+        <a href="./index.html" class="btn btn-outline-light mt-3 p-2 buttonError">Search again!</a>
+      </div>
+    </div>`;
+}
+
+
+// /* ----------------------------  CHECKBOX --------------------------------- */
+function filterByCategory() {
+  const checkboxes = document.querySelectorAll("input[type=checkbox]");
+  checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("click", (e) => {
 
       if (e.target.checked) {
-        selected.push(e.target.value)
-        filterAll()
+        selected.push(e.target.value);
+        filterAll();
       } else {
-        selected = selected.filter(notcheck => notcheck !== e.target.value)
-        filterAll()
+        selected = selected.filter((notcheck) => notcheck !== e.target.value);
+        filterAll();
       }
-    })
-  }
+    });
+  });
 }
 
 
-/* --------------------------------- SEARCH --------------------------------- */
-function searchBar() {
+// /* --------------------------------- SEARCH --------------------------------- */
+function filterSearch() {
   search.addEventListener("change", () => {
-    const error = { name: 'error' }
     filtered = events.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()))
+
     if (filtered.length == 0) {
-      filtered.push(error)
+      drawNotFound();
+    } else {
+      filterAll();
     }
-    filterAll()
   })
 }
 
-/* ------------------------------ CROSS FILTER ------------------------------ */
+
+// /* ------------------------------ CROSS FILTER ------------------------------ */
 function filterAll() {
+  const selectedEvents = events.filter(event => selected.includes(event.category));
+ 
+  if (filtered.length === 1 && filtered[0].name === "error") {
+    drawCards(filtered);
 
-  let selectedEvents = []
-  for (const i of selected)
-    for (const event of events)
-      if (i == event.category)
-        selectedEvents.push(event)
+  } else if (selectedEvents.length === 0 && filtered.length === 0) {
+    drawCards(events);
 
-  //caso 0: falló la busqueda
-  if (filtered.length == 1 && filtered[0].name == "error")
-    showCards(filtered)
+  } else if (selectedEvents.length === 0 && filtered.length !== 0) {
+    drawCards(filtered);
 
-  //caso 1: los 2 vacios
-  else if (selectedEvents.length == 0 && filtered.length == 0) {
-    showCards(selected)
-  }
+  } else if (selectedEvents.length !== 0 && filtered.length === 0) {
+    drawCards(selectedEvents);
 
-  //caso 2: solo valores en searh
-  else if (selectedEvents.length == 0 && filtered.length != 0) {
-    showCards(filtered)
-  }
-
-  //caso 3: solo valores en checkbox
-  else if (selectedEvents.length != 0 && filtered.length == 0) {
-    showCards(selectedEvents)
-  }
-
-  //caso 4: los 2 tienen valores hago la interseccion
-  else {
-    const filteredArray = selectedEvents.filter(value => filtered.includes(value));
-    showCards(filteredArray)
+  } else {
+    const filteredArray = selectedEvents.filter(event => filtered.includes(event));
+    drawCards(filteredArray);
   }
 }

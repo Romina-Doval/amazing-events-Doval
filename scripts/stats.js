@@ -16,8 +16,6 @@ fetch(API_URL)
     const { catPast, catUpcoming } = eventsByCategory(data);
     const { revenuesPast, revenuesUpcoming } = calculateIncomesByCategory(data.events, data.currentDate);
 
-    console.log(revenuesPast);
-
     showStats(
       sortedPercentages,
       lowerAttendance,
@@ -154,6 +152,9 @@ function showStats(sorted, lower, larger, catPast, catUpcoming, revPast, revUpco
 }
 
 
+/* en las siguientes funciones intente usar un "spread operator", el código no me tiro
+error pero no se si lo use de manera correcta, me guie por documentación */
+
 /* ---------------- Calculate Attendance Percentages ---------------- */
 function calculateAttendancePercentage(data) {
   const eventsPercentages = data.events
@@ -194,7 +195,6 @@ function eventsByCategory(data) {
 
 
 /* --------------- Calculate Incomes - Filter by Past/Upcoming -------------- */
-
 function calculateIncomesByCategory(events, currentDate) {
   const beforeEvents = events.filter(event => event.date < currentDate);
   const afterEvents = events.filter(event => event.date >= currentDate);

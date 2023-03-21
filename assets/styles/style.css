@@ -8,6 +8,8 @@ body {
     background: radial-gradient(circle, rgba(224,4,108,0.9179359243697479) 2%, rgba(0,0,0,1) 90%);
 }
 
+
+/* --------------------------------- NAVBAR --------------------------------- */
 .navbar {
     border-bottom: 2px solid #e0046c;
 }
@@ -26,6 +28,24 @@ body {
     color: #f9f9f9;
 }
 
+
+/* --------------------------------- BANNER --------------------------------- */
+h1 {
+    color: #e0046c;
+    text-shadow: 2px 2px 2px rgba(249, 249, 249, 1);
+    letter-spacing: 1px; 
+}
+
+.banner {
+    height: auto;
+    background-image: url(../images/Mass\ Circles.svg);
+}
+
+h1:hover, footer .fa-brands:hover, .fa-solid:hover {
+    transform: scale(1.2);
+}
+
+/* ---------------------------- CHECKBOX - SEARCH --------------------------- */
 .home-button {
     border-color: #e0046c;
     color: #f9f9f9;
@@ -40,26 +60,6 @@ body {
 
 .fa-magnifying-glass {
     color: #f9f9f9;
-}
-
-h1 {
-    color: #e0046c;
-    text-shadow: 2px 2px 2px rgba(249, 249, 249, 1);
-    letter-spacing: 1px; 
-}
-
-.banner {
-    height: auto;
-    background-image: url(../images/Mass\ Circles.svg);
-}
-
-h1:hover, footer img:hover, .fa-solid:hover {
-    transform: scale(1.2);
-}
-
-footer {
-    color: #f9f9f9;
-    border-top: 2px solid #e0046c;
 }
 
 .form-control {
@@ -78,7 +78,62 @@ footer {
     border-color: #e0046c
 }
 
-.card, form, table {
+#form-button, form {
+    border-color: #e0046c;
+    color: #e0046c;
+}
+
+#form-button:hover {
+    border-color: #f9f9f9;
+    color: #f9f9f9;
+    background-color: #e0046c;
+}
+
+#filterSearch::placeholder {
+    color: gray;
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.buttonClear {
+    border-color: #e0046c;
+    color: #e0046c;
+    font-size: 15px;
+}
+
+.buttonClear:hover {
+    border-color: #e0046c;
+    color: #e0046c;
+    font-weight: bold;
+}
+
+/* -------------------------------- NOT FOUND ------------------------------- */
+.buttonError {
+    border-color: #e0046c;
+    color: #e0046c;
+    font-size: 20px;
+}
+
+.divError {
+    background-color: #000000;
+    border-radius: 50px;
+    box-shadow: 0px 0px 28px 3px #fff;
+}
+
+
+/* --------------------------------- FOOTER --------------------------------- */
+footer {
+    color: #f9f9f9;
+    border-top: 2px solid #e0046c;
+}
+
+.fa-brands {
+    color: #e0046c;
+}
+
+
+/* ---------------------------------- CARDS --------------------------------- */
+.card {
     box-shadow: 0px 0px 15px 1px #000000;
 }
 
@@ -95,15 +150,10 @@ footer {
     color: #e0046c;
 }
 
-#form-button, form {
-    border-color: #e0046c;
-    color: #e0046c;
-}
 
-#form-button:hover {
-    border-color: #f9f9f9;
-    color: #f9f9f9;
-    background-color: #e0046c;
+/* ------------------------------- TABLE STATS ------------------------------ */
+form, table {
+    box-shadow: 0px 0px 15px 1px #000000;
 }
 
 td {
@@ -126,39 +176,28 @@ table {
     background-color: gray;
 }
 
+.row-cat {
+    background: #D7DBDD ;
+}
+
+
+/* ------------------------------ MEDIA QUERIES ----------------------------- */
 @media only screen and (max-width: 768px) {
     #main-form {
       justify-content: center;
     }
   }
 
+
+/* ------------------------------ CARDS DETAILS ----------------------------- */
 .text-details {
     color: #e0046c;
     margin-left: 20px;
 }
 
-
 .description-details, .text-details2 {
     color: #D7DBDD;
     margin-left: 15px;
-}
-
-.buttonError {
-    border-color: #e0046c;
-    color: #e0046c;
-    font-size: 20px;
-}
-
-.divError {
-    background-color: #000000;
-    border-radius: 50px;
-    box-shadow: 0px 0px 28px 3px #fff;
-}
-
-#filterSearch::placeholder {
-    color: gray;
-    font-weight: lighter;
-    font-style: italic;
 }
 
 .fa-star {
@@ -168,16 +207,13 @@ table {
 
 #card-details {
     border-radius: 15px;
-}
-
-.row-cat {
-    background: #D7DBDD ;
+    border: #e0046c 2px dashed;
+    
 }
 
 .scale-in-center{
     animation:scale-in-center .8s cubic-bezier(.25,.46,.45,.94) both
 }
-
 
 @keyframes scale-in-center{
     0%{transform:scale(0);
@@ -185,20 +221,9 @@ table {
         opacity:1}
 }
 
-.buttonClear {
-    border-color: #e0046c;
-    color: #e0046c;
-    font-size: 15px;
-}
-
-.buttonClear:hover {
-    border-color: #e0046c;
-    color: #e0046c;
-    font-weight: bold;
-}
-
 .title-details {
     -webkit-text-stroke: 2px #e0046c;
     color: transparent;
     letter-spacing: 1px; 
 }
+
