@@ -47,3 +47,7 @@ function drawDetails(eventDetails) {
 </div>
 </div>`
 }
+
+/* --------------------------------- LOADER --------------------------------- */
+const loader = `<div class="loader d-flex justify-content-center"></div>`
+containerCardsDetails.innerHTML = loader

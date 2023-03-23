@@ -3,8 +3,9 @@ const API_URL = "https://mindhub-xj03.onrender.com/api/amazing";
 const containerMain = document.getElementById('containerMain');
 const containerCheckbox = document.getElementById('containerCheckbox');
 const search = document.getElementById('filterSearch');
-let selected = [];
-let filtered = [];
+
+let filteredEventsByCategory = [];
+let filteredEventsBySearch = [];
 let events;
 let date;
 
@@ -34,7 +35,7 @@ function drawCards(listEvents) {
     drawNotFound();
   } else {
     for (const event of listEvents) {
-      if (event.date > date) {
+      if (event.date < date) {
         cards += `<div class="card bg-dark bg-gradient text-white mb-5" style="width: 18rem;">
       <img src="${event.image}" class="card-img-top p-1" style="height: 10rem;" alt="${event.name}"/>
       <div class="card-body text-center">
@@ -57,14 +58,14 @@ function drawCategories(events) {
     }
     return accumulator;
   }, []).sort();
-  
+
   const checkboxes = categories.map(category => {
     return `
       <input class="form-check-input me-2" type="checkbox" name="category" value="${category}" id="checkbox"></input>
       <label class="form-check-label text-white me-4" for="checkbox">${category}</label>
     `;
   }).join('');
-  
+
   containerCheckbox.innerHTML = checkboxes;
 }
 
@@ -83,56 +84,45 @@ function drawNotFound() {
 }
 
 
-// /* ----------------------------  CHECKBOX --------------------------------- */
+/* ----------------------------  CHECKBOX --------------------------------- value de categias */
 function filterByCategory() {
   const checkboxes = document.querySelectorAll("input[type=checkbox]");
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("click", (e) => {
 
-      if (e.target.checked) {
-        selected.push(e.target.value);
-        filterAll();
-      } else {
-        selected = selected.filter((notcheck) => notcheck !== e.target.value);
-        filterAll();
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", () => {
+      filteredEventsByCategory = Array.from(checkboxes)
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
+
+      // Si no hay ninguna casilla de verificación seleccionada, mostrar todos los eventos
+      if (filteredEventsByCategory.length === 0) {
+        drawCards(events);
+        return;
       }
+
+      filteredEventsByCategory = events.filter((event) => filteredEventsByCategory.includes(event.category));
+      drawCards(filteredEventsByCategory);
     });
   });
 }
 
 
-// /* --------------------------------- SEARCH --------------------------------- */
-function filterSearch() {
-  search.addEventListener("change", () => {
-    filtered = events.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()))
-
-    if (filtered.length == 0) {
-      drawNotFound();
-    } else {
-      filterAll();
-    }
-  })
-}
-
-
-// /* ------------------------------ CROSS FILTER ------------------------------ */
-function filterAll() {
-  const selectedEvents = events.filter(event => selected.includes(event.category));
- 
-  if (filtered.length === 1) {
-    drawCards(filtered);
-
-  } else if (selectedEvents.length === 0 && filtered.length === 0) {
-    drawCards(events);
-
-  } else if (selectedEvents.length === 0 && filtered.length !== 0) {
-    drawCards(filtered);
-
-  } else if (selectedEvents.length !== 0 && filtered.length === 0) {
-    drawCards(selectedEvents);
-
+/* --------------------------------- SEARCH --------------------------------- */
+search.addEventListener("keyup", () => {
+  if (filteredEventsByCategory.length != 0) {
+    filteredEventsBySearch = filteredEventsByCategory.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()));
   } else {
-    const filteredArray = selectedEvents.filter(event => filtered.includes(event));
-    drawCards(filteredArray);
+    filteredEventsBySearch = events.filter((event) => event.name.toLowerCase().includes(search.value.toLowerCase()));
   }
-}
+
+  if (filteredEventsBySearch.length === 0) {
+    drawNotFound();
+  } else {
+    drawCards(filteredEventsBySearch);
+  }
+});
+
+
+/* --------------------------------- LOADER --------------------------------- */
+const loader = `<div class="loader d-flex justify-content-center"></div>`
+containerMain.innerHTML = loader

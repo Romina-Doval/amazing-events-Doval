@@ -227,3 +227,29 @@ table {
     letter-spacing: 1px; 
 }
 
+/* -------------------------------------------------------------------------- */
+.loader {
+    display: inline-block;
+    width: 500px;
+    height: 500px;
+  }
+  .loader:after {
+    content: " ";
+    display: block;
+    width: 250px;
+    height: 250px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 20px solid #000000;
+    border-color: #000000 transparent #fff transparent;
+    animation: loader 1.2s linear infinite;
+  }
+  @keyframes loader {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
